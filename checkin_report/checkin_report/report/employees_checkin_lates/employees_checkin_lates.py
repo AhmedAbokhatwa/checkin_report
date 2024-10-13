@@ -1,26 +1,3 @@
-# Copyright (c) 2024, ahmed reda and contributors
-# For license information, please see license.txt
-
-# import frappe
-#  SELECT 
-#             ec.employee AS employee,
-#             e.employee_name AS employee_name,
-#             ec.time,
-#             ec.attendance AS attendance,
-#             e.designation,
-#             e.branch,
-#             a.working_hours AS working_hours,
-#             a.attendance_date AS attendance_date, 
-#             dl.punch
-#         FROM 
-#             `tabEmployee Checkin` ec
-#         JOIN 
-#             `tabEmployee` e ON ec.employee = e.name
-#         LEFT JOIN 
-#             `tabAttendance` a ON ec.attendance = a.name
-# 		LEFT JOIN 
-#             `tabDevice Log` dl ON dl.name = ec.device_log    
-#         WHERE  ec.employee ='2233'
 
 import frappe
 from frappe import _
@@ -69,39 +46,27 @@ def get_columns():
             'label': _('Branch'),
             'width': 200
         },
-        {
-            'fieldname': 'time',
-            'fieldtype': 'Datetime',
-            'label': _('Time'),
-            'width': 200
-        },
-        {
-            'fieldname': 'working_hours',
-            'fieldtype': 'Data',
-            'label': _('Working Hours'),
-            'width': 100
-        },
+        # {
+        #     'fieldname': 'name_att',
+        #     'fieldtype': 'Data',
+        #     'label': _('Name att'),
+        #     'width': 200
+        # },
         {
             'fieldname': 'attendance_date',
             'fieldtype': 'Date',
             'label': _('Attendance Date'),
-            'width': 200
+            'width': 100
         },
-        # {
-        #     'fieldname': 'punch',
-        #     'fieldtype': 'Int',
-        #     'label': _('punch'),
-        #     'width': 200
-        # },
         {
-            'fieldname': 'shift_actual_end',
-            'fieldtype': 'Datetime',
-            'label': _('shift Actual End'),
-            'width': 200
+            'fieldname': 'deduction',
+            'fieldtype': 'Float',
+            'label': _('Deduction'),
+            'width': 100
         },
         {
             'fieldname': 'diff',
-            'fieldtype': 'Int',
+            'fieldtype': 'Float',
             'label': _('diff in Minutes'),
             'width': 200
         },
@@ -114,7 +79,7 @@ def get_data(filters):
     params = []
     data = []
     # conditions.append("dl.punch = '0'")
-    conditions.append("ec.attendance <> 'null'")
+    # conditions.append("ec.attendance <> 'null'")
     
     
     if filters and filters.get("employee_name"):
@@ -128,37 +93,34 @@ def get_data(filters):
     if filters and filters.get("branch"):
         conditions.append("e.branch = %s")
         params.append(filters["branch"])	
-    if filters and filters.get("attendance_date"):
+    if filters and filters.get("from_date") and filters.get("to_date"):
         try:
-            conditions.append("ec.attendance_date = %s")
-            print("daaaaaaaaaa",filters.get("attendance_date"),"conditions",conditions)
-            params.append(filters.get("attendance_date"))
+            conditions.append("a.attendance_date BETWEEN %s AND %s")
+            params.append(filters["from_date"])
+            params.append(filters["to_date"])
         except ValueError:
             raise ValueError(f"Invalid date  Provided")
     condition_str = " AND ".join(conditions)
     sql_query = f"""
         SELECT 
-			TIMESTAMPDIFF(MINUTE, ec.time ,ec.shift_actual_end) AS diff,	
-            ec.employee AS employee,
+				
+            e.employee AS employee,
             e.employee_name AS employee_name,
-            ec.time,
-            ec.attendance AS attendance,
             e.designation,
             e.branch,
-            ec.shift_actual_end AS shift_actual_end,
-            a.working_hours AS working_hours,
-            a.attendance_date AS attendance_date, 
-            dl.punch
+            a.name AS name_att,
+            a.attendance_date AS attendance_date,
+            ec.deduction AS deduction,
+            (ec.deduction*60 ) AS diff
         FROM 
-            `tabEmployee Checkin` ec
-        JOIN 
-            `tabEmployee` e ON ec.employee = e.name
+            `tabEmployee` e
         LEFT JOIN 
+            `tabEmployee Checkin` ec ON ec.employee = e.name
+        INNER JOIN 
             `tabAttendance` a ON ec.attendance = a.name
 		LEFT JOIN 
             `tabDevice Log` dl ON dl.name = ec.device_log    
         WHERE 
-	
             {condition_str if condition_str else '1=1'}
     """
     employees = frappe.db.sql(sql_query, params, as_dict=True)

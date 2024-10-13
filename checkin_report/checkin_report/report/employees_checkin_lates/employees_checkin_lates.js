@@ -28,9 +28,14 @@ frappe.query_reports["employees Checkin Lates"] = {
 				'label':__('Branch')
 			},
 			{
-				'fieldname':'attendance_date',
+				'fieldname':'from_date',
 				'fieldtype':'Date',
-				'label':__('Date')
+				'label':__('From Date')
+			},
+			{
+				'fieldname':'to_date',
+				'fieldtype':'Date',
+				'label':__('To Date')
 			},
 	]
 };
