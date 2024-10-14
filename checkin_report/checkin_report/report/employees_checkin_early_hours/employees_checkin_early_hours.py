@@ -69,14 +69,8 @@ def get_columns():
             'label': _('Branch'),
             'width': 200
         },
-        # {
-        #     'fieldname': 'name_att',
-        #     'fieldtype': 'Data',
-        #     'label': _('Name att'),
-        #     'width': 200
-        # },
         {
-            'fieldname': 'attendance_date',
+            'fieldname': 'time',
             'fieldtype': 'Date',
             'label': _('Attendance Date'),
             'width': 100
@@ -98,13 +92,13 @@ def get_columns():
 from datetime import datetime
 
 def get_data(filters):
-    conditions = []
+    conditions = ["ec.custom_early_diiference > '0'"]
     params = []
     data = []
     
     
     if filters and filters.get("employee_name"):
-        conditions.append("ec.employee = %s")
+        conditions.append("e.employee = %s")
         params.append(filters["employee_name"])
         
     if filters and filters.get("designation"):
@@ -116,7 +110,7 @@ def get_data(filters):
         params.append(filters["branch"])	
     if filters and filters.get("from_date") and filters.get("to_date"):
         try:
-            conditions.append("a.attendance_date BETWEEN %s AND %s")
+            conditions.append("DATE(ec.time) BETWEEN %s AND %s")
             params.append(filters["from_date"])
             params.append(filters["to_date"])
         except ValueError:
@@ -129,18 +123,16 @@ def get_data(filters):
             e.designation,
             e.branch,
             a.name AS name_att,
-            a.attendance_date AS attendance_date,
+            DATE(ec.time) AS time,
             ec.custom_early_diiference AS deduction,
             (ec.custom_early_diiference*60 ) AS diff
         FROM 
-            `tabEmployee` e
-        LEFT JOIN 
-            `tabEmployee Checkin` ec ON ec.employee = e.name
-        INNER JOIN 
+            `tabEmployee Checkin` ec 
+        left JOIN 
             `tabAttendance` a ON ec.attendance = a.name
-		LEFT JOIN 
-            `tabDevice Log` dl ON dl.name = ec.device_log    
-        WHERE 
+        left join
+            `tabEmployee` e ON e.employee_name = ec.employee_name
+        WHERE    
             {condition_str if condition_str else '1=1'}
     """
     employees = frappe.db.sql(sql_query, params, as_dict=True)
