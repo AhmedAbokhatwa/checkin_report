@@ -22,6 +22,8 @@ result :
  
 Delete branch ?
 -git branch -d ahmed
+Or 
+-git push origin --delete ahmed
 
 if ypu need to know your current Remote branch that you can push to it (remote branch)?
 git branch -r
