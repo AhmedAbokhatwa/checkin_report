@@ -1,0 +1,38 @@
+curr branch ?
+-git branch
+result : main
+
+remote branch?
+git branch -r
+result : origin/main
+
+Since your local main branch is not currently tracking the remote origin/main branch, you can set it up to track that branch:?
+-git branch --set-upstream-to=origin/main main
+
+
+Resolving Divergent Branches?
+-git pull --no-rebase
+-git config pull.rebase false
+
+
+
+Before making changes, create a new branch:?
+git checkout -b my-feature-branch
+
+Make Changes and Commit:?
+git add .
+git commit -m "Add my feature"
+git push origin my-feature-branch
+
+
+
+Create a Pull Request:?
+Go to your forked repository on GitHub.
+You should see an option to create a pull request. Click on it and 
+follow the prompts to submit your changes to your friend's repository.
+
+Sync with the Original Repository (when necessary):?
+git checkout main
+git fetch upstream
+git merge upstream/main
+
