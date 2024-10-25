@@ -1,11 +1,34 @@
-curr branch ?
+
+****************************************************************Github******************************************************************************
+
+
+how to create new branch ??
+1. git checkout -b new-branch-name
+2.git add .
+3.git commit -m "Your commit message describing the changes"
+4.git push origin new-branch-name
+
+
+commit?
+-git commit -m "first commit"
+
+
+ALL current branch ?
 -git branch
-result : main
+result : 
+*developer
+ ahmed
+ test
+ 
+Delete branch ?
+-git branch -d ahmed
 
-remote branch?
+if ypu need to know your current Remote branch that you can push to it (remote branch)?
 git branch -r
-result : origin/main
+result : origin/developer
 
+
+git branch -m < branch-name >
 Since your local main branch is not currently tracking the remote origin/main branch, you can set it up to track that branch:?
 -git branch --set-upstream-to=origin/main main
 
@@ -33,6 +56,34 @@ follow the prompts to submit your changes to your friend's repository.
 
 Sync with the Original Repository (when necessary):?
 git checkout main
+
+
 git fetch upstream
 git merge upstream/main
+
+
+
+----------------------------
+problem fetal authontication
+----------------------------
+1. Check for SSH Key
+-ls -al ~/.ssh
+2. Generate an SSH Key (if needed)
+-ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+3. Add SSH Key to the SSH Agent
+-eval "$(ssh-agent -s)"
+4.Then add your SSH key:
+-ssh-add ~/.ssh/id_rsa
+5.Copy your SSH public key to the clipboard:
+-cat ~/.ssh/id_rsa.pub
+6.Go to your GitHub account Then Navigate to Settings > SSH and GPG keys Click New SSH key Paste your key
+7. Test the SSH Connection???
+-ssh -T git@github.com
+8.Try t clone Or Push
+-git clone git@github.com:AhmedAbokhatwa/cheatsheet.git
+- if Still fatal: Authentication failed for 'https//github.com/your_name/file.git/'
+Switching to SSH for Git Operations
+1.Change the Remote URL to SSH:
+-git remote set-url origin git@github.com:your_name/file.git
+2.git push <> <>
 
