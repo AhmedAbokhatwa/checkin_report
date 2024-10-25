@@ -2,23 +2,24 @@
 ****************************************************************Github******************************************************************************
 
 
-how to create new branch ??
+1.how to create new branch ??
 1. git checkout -b new-branch-name
 2.git add .
 3.git commit -m "Your commit message describing the changes"
 4.git push origin new-branch-name
 
 
-commit?
+2.commit?
 -git commit -m "first commit"
 
 
-ALL current branch ?
+3.ALL current branch ?
 -git branch
-result : 
-*developer
- ahmed
- test
+	result : branch is selectd <developer>
+	*developer
+	 ahmed
+	 test	
+	 
  
 Delete branch ?
 -git branch -d ahmed
@@ -87,5 +88,5 @@ problem fetal authontication
 Switching to SSH for Git Operations
 1.Change the Remote URL to SSH:
 -git remote set-url origin git@github.com:your_name/file.git
-2.git push <> <>
+2.git push <origin> <name>
 
