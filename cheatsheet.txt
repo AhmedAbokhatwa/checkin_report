@@ -20,8 +20,11 @@
 	 ahmed
 	 test	
 	 
+3.1 Switch to locally branch ?
+- git checkout ahmed
+
  
-Delete branch ?
+4.Delete branch ?
 -git branch -d ahmed
 Or 
 -git push origin --delete ahmed
@@ -89,4 +92,17 @@ Switching to SSH for Git Operations
 1.Change the Remote URL to SSH:
 -git remote set-url origin git@github.com:your_name/file.git
 2.git push <origin> <name>
+----------------------------------------------------------------
+lost my data in file when i delete <branch>make push on git repo
+----------------------------------------------------------------
+1.Check the reflog and Find the commit hash::
+-git reflog
+2.Recover the branch:
+-git checkout -b recovered-ahmed <commit-hash>
+3. you can either merge it back into your developer branch??
+-git checkout developer
+-git merge recovered-ahmed
+
+
+
 
