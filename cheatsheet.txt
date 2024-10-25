@@ -21,7 +21,7 @@
 	 test	
 	 
 3.1 Switch to locally branch ?
-- git checkout ahmed
+- git checkout <ahmed>	
 
  
 4.Delete branch ?
@@ -105,4 +105,7 @@ lost my data in file when i delete <branch>make push on git repo
 
 
 
+****************************************************************Linux Command**********************************************************************
+1.find file?
+-find ~ -name "text.txt"
 
