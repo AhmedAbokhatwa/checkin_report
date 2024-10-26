@@ -109,3 +109,26 @@ lost my data in file when i delete <branch>make push on git repo
 1.find file?
 -find ~ -name "text.txt"
 
+/////////////////////
+<production Setup>?
+////////////////////
+-sudo apt-get -y install supervisor nginx
+-sudo apt-get install supervisor
+-sudo systemctl start supervisor
+-sudo systemctl status supervisor
+-bench setup socketio
+-bench setup supervisor
+-bench setup redis
+-sudo supervisorctl reload
+-sudo bench setup production [BENCH USER]
+
+
+///////////////////////////
+ERROR fail2ban
+//////////////////////////
+1. sudo apt-get install fail2ban
+2. sudo systemctl start fail2ban
+3. sudo systemctl enable fail2ban
+4. sudo systemctl status fail2ban
+5. bench setup role fail2ban
+6. sudo bench setup production [BENCH USER]
