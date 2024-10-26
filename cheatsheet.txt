@@ -108,7 +108,13 @@ lost my data in file when i delete <branch>make push on git repo
 ****************************************************************Linux Command**********************************************************************
 1.find file?
 -find ~ -name "text.txt"
-
+  
+2. find Command?
+-history | grep "part_of_command"
+history | grep "redis"
+result : 1908  redis-server ~/frappe-bench/config/redis_cache.conf
+ 		 1918  sudo netstat -tuln | grep redis
+  
 /////////////////////
 <production Setup>?
 ////////////////////
@@ -122,7 +128,12 @@ lost my data in file when i delete <branch>make push on git repo
 -sudo supervisorctl reload
 -sudo bench setup production [BENCH USER]
 
-
+///////////////////////////
+if you have bench 15 run on production
+you can run developement server 
+//////////////////////////
+1. sudo  supervisorctl stop all
+2. sudo supervisorctl stop nginx
 ///////////////////////////
 ERROR fail2ban
 //////////////////////////
