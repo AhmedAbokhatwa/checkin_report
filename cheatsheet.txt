@@ -1,6 +1,10 @@
+- bench --site sitename enable-scheduler
+- sudo bench set-config developer_mode true
 
-****************************************************************Github******************************************************************************
-
+*************************************************Github****************************************************
+eval "$(ssh-agent -s)"  # Start the SSH agent if it's not already running
+ssh-add ~/.ssh/id_rsa   # Add your private key
+ssh-add -l
 
 1.how to create new branch ??
 1. git checkout -b new-branch-name
@@ -72,6 +76,15 @@ git merge upstream/main
 ----------------------------
 problem fetal authontication
 ----------------------------
+check if your SSH key is added to the SSH agent
+1. ssh-add -l
+4096 SHA256:MPYaxmytpyRYZd5Vf+cc9r/FLSVYA7vHtdcsRmTWvaA ahmedreda199785@gmail.com (RSA)
+
+Enter passphrase for /home/frappe/.ssh/id_rsa: 199792285
+Identity added: /home/frappe/.ssh/id_rsa (ahmedreda199785@gmail.com)
+
+
+
 1. Check for SSH Key
 -ls -al ~/.ssh
 2. Generate an SSH Key (if needed)
@@ -87,6 +100,7 @@ problem fetal authontication
 -ssh -T git@github.com
 8.Try t clone Or Push
 -git clone git@github.com:AhmedAbokhatwa/cheatsheet.git
+
 - if Still fatal: Authentication failed for 'https//github.com/your_name/file.git/'
 Switching to SSH for Git Operations
 1.Change the Remote URL to SSH:
@@ -103,7 +117,12 @@ lost my data in file when i delete <branch>make push on git repo
 -git checkout developer
 -git merge recovered-ahmed
 
-
+------------------------------
+get app if it in anther branch
+------------------------------
+bench get-app checkin_report https:/
+/github.com/AhmedAbokhatwa/checkin_report.git --branch develop
+*************************************************************
 
 ****************************************************************Linux Command**********************************************************************
 1.find file?
@@ -118,6 +137,7 @@ result : 1908  redis-server ~/frappe-bench/config/redis_cache.conf
 /////////////////////
 <production Setup>?
 ////////////////////
+******************************************
 -sudo apt-get -y install supervisor nginx
 -sudo apt-get install supervisor
 -sudo systemctl start supervisor
@@ -126,8 +146,18 @@ result : 1908  redis-server ~/frappe-bench/config/redis_cache.conf
 -bench setup supervisor
 -bench setup redis
 -sudo supervisorctl reload
--sudo bench setup production [BENCH USER]
+-	 [BENCH USER]
+*****************************************
 
+
+/////////////////////////////
+500 Internal Server Error
+////////////////////////////
+*****************************************
+sudo systemctl reload nginx
+
+
+*****************************************
 ///////////////////////////
 if you have bench 15 run on production
 you can run developement server 
@@ -143,3 +173,65 @@ ERROR fail2ban
 4. sudo systemctl status fail2ban
 5. bench setup role fail2ban
 6. sudo bench setup production [BENCH USER]
+************************************************************frappe code *******************************************
+-listview.page.add_menu_item(__(""),function(){})
+-frappe.listview_settings["Device Log"] = { refresh: function (listview) {}}
+
+-------------------
+Insert Into 
+	`tabEmployee Checkin`
+	 (name, employee, time, log_type, device_log, device,creation,modified,owner)
+	 (select name , employee , time , type, name, device,creation,modified,owner 
+		from 
+			`tabDevice Log`
+		where 
+			employee is not null
+		and
+	  		name not in 
+			(select 
+				device_log from 
+			`tabEmployee Checkin`
+	   		where 
+	   		device_log is not null));
+	"""
+------------------	
+	
+
+------------------
+sync_employee():
+	Update 
+		`tabDevice Log` log
+	set log.employee = (
+		select name 
+		from 
+		tabEmployee 
+		where attendance_device_id = log.enroll_no limit 1		
+	)
+
+-----------------
+
+----------------
+in python
+today 
+today_date = getdate(today())
+
+last month
+last_month = add_months(row["renewal_date"], -1)
+
+
+----------------
+
+-----------------
+convert date to srtin
+dateString =  formatdate(get_datetime_str(self.end_of_life), "yyyy-MM-dd")
+-----------------
+append in childtable
+
+customer_doc.append('customer_validation',
+{
+	'field': item['field'],
+	'reason': item['reason']
+})
+
+
+----------------
