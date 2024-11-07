@@ -74,9 +74,7 @@ def get_data(filters):
         except ValueError:
             raise ValueError(f"Invalid date  Provided")
 
-    condition_str = " AND ".join(conditions)
-    print("condition_str :", condition_str)
-    sql_query = f"""
+    sql = f"""
         SELECT 
             ec.employee AS employee,
             ec.employee_name,
@@ -88,9 +86,15 @@ def get_data(filters):
             `tabAttendance` a 
         left join 
         	`tabEmployee Checkin` ec
-		ON ec.attendance = a.name    
-        Where 
-			{condition_str}
+		ON ec.attendance = a.name     
+    
     """
-    employees = frappe.db.sql(sql_query, params, as_dict=True)
-    return employees
+    if conditions:
+        sql += " WHERE " + " AND ".join(conditions)
+
+        # Execute the query with the filter values
+        mydata = frappe.db.sql(sql, params, as_dict=True)
+
+        return mydata
+    else:
+        mydata = []
