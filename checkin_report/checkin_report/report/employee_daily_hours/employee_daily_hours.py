@@ -90,8 +90,7 @@ def get_data(filters):
         	`tabEmployee Checkin` ec
 		ON ec.attendance = a.name    
         Where 
-			{condition_str if condition_str else '1=1'}
+			{condition_str}
     """
     employees = frappe.db.sql(sql_query, params, as_dict=True)
     return employees
-
