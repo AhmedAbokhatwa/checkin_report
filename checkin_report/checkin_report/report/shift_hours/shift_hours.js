@@ -3,7 +3,7 @@
 
 frappe.query_reports["shift hours"] = {
 	"filters": [
-    {
+    { 
       fieldname: "employee",
       fieldtype: "Link",
       options: "Employee",

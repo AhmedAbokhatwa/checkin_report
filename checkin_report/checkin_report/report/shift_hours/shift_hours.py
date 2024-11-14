@@ -122,3 +122,43 @@ def get_data(filters):
     # Execute the query with the filter values
     mydata = frappe.db.sql(sql, params, as_dict=True)
     return mydata
+
+
+
+
+
+
+# SELECT 
+#     ec_in.employee AS employee_id,
+#     ec_in.name AS namech_in,
+#     ec_in.employee_name,
+#     DATE(ec_in.time) AS attendance_date,
+#     MIN(ec_in.time) AS first_checkin_time,
+#     MAX(ec_in.time) AS last_checkin_time,
+#     TIMEDIFF(MAX(ec_in.time), MIN(ec_in.time)) AS time_difference,
+#     COUNT(ec_in.name) AS checkin_count,
+#     st.custom_shift_hours,
+    
+#     CASE 
+#         WHEN TIMEDIFF(MAX(ec_in.time), MIN(ec_in.time)) > st.custom_shift_hours 
+#         THEN time(TIMEDIFF(MAX(ec_in.time), MIN(ec_in.time)) - st.custom_shift_hours)
+#         ELSE NULL
+#     END AS diff_positive,
+    
+#     CASE 
+#         WHEN TIMEDIFF(MAX(ec_in.time), MIN(ec_in.time)) < st.custom_shift_hours 
+#         THEN time(st.custom_shift_hours - TIMEDIFF(MAX(ec_in.time), MIN(ec_in.time)))
+#         ELSE NULL
+#     END AS diff_negative
+
+# FROM 
+#     `tabEmployee Checkin` ec_in
+# LEFT JOIN 
+#     `tabShift Type` st ON st.name = ec_in.shift
+# WHERE 
+#     ec_in.employee_name IS NOT NULL
+    
+# GROUP BY 
+#     ec_in.employee, DATE(ec_in.time)
+# ORDER BY 
+#     ec_in.employee, attendance_date;
