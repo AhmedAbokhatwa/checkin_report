@@ -11,6 +11,13 @@ frappe.query_reports["employ early and late hours"] = {
         "width":"270"
       },
       {
+        "fieldname":"employee",
+        "label":__("اسم الموظف"),
+        "fieldtype":"Link",
+        "options":"Employee",
+        "width":"270"
+      },
+      {
         "fieldname":"attendance_date",
         "label":__("تاريخ الحضور"),
         "fieldtype":"Date",

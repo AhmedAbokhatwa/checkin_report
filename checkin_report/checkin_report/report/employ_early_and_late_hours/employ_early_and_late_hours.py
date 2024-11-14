@@ -27,19 +27,19 @@ def get_cols():
           {
             "fieldname": "custom_shift_hours",
             "label": _("عدد ساعات الشيفت"),
-            "fieldtype": "Date",
+            "fieldtype": "time",
             "width": "160"
         },
           {
             "fieldname": "diff_positive",
-            "label": _("حضور الباكر"),
-            "fieldtype": "Date",
+            "label": _("الحضور الباكر"),
+            "fieldtype": "time",
             "width": "270"
         },
           {
             "fieldname": "diff_negative",
             "label": _("الحضور المتاخر"),
-            "fieldtype": "Date",
+            "fieldtype": "time",
             "width": "270"
         }
     ]
