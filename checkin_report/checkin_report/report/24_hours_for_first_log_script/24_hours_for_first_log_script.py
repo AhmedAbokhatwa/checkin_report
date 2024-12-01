@@ -8,7 +8,7 @@ def execute(filters=None):
 
 def get_columns():
     columns = [
-        # {"fieldname": "employee", "label": "Employee", "fieldtype": "Link", "options": "Employee", "width": 200},
+        {"fieldname": "employee", "label": "Employee", "fieldtype": "Link", "options": "Employee", "width": 200},
         {"fieldname": "employee_name", "label": "Employee Name", "fieldtype": "Data", "width": 200},
         {"fieldname": "first_log", "label": "First Log", "fieldtype": "Datetime", "width": 200},
         {"fieldname": "last_log_within_24_hours", "label": "Last Log", "fieldtype": "Datetime", "width": 200},
