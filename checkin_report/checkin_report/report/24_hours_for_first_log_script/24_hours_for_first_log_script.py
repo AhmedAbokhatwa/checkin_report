@@ -8,16 +8,15 @@ def execute(filters=None):
 
 def get_columns():
     columns = [
-        {"fieldname": "employee", "label": "Employee", "fieldtype": "Link", "options": "Employee", "width": 200},
+        # {"fieldname": "employee", "label": "Employee", "fieldtype": "Link", "options": "Employee", "width": 200},
         {"fieldname": "employee_name", "label": "Employee Name", "fieldtype": "Data", "width": 200},
         {"fieldname": "first_log", "label": "First Log", "fieldtype": "Datetime", "width": 200},
         {"fieldname": "last_log_within_24_hours", "label": "Last Log", "fieldtype": "Datetime", "width": 200},
-        {"fieldname": "shift", "label": "Shift", "fieldtype": "Data", "width": 270},
-        {"fieldname": "custom_shift_hours", "label": "Shift Hours", "fieldtype": "Time", "width": 160},
-        {"fieldname": "over_time", "label": "Overtime", "fieldtype": "Time", "width": 150},
-        {"fieldname": "deduction", "label": "Deduction", "fieldtype": "Time", "width": 150},
-        {"fieldname": "diff_time", "label": "Total Hrs", "fieldtype": "Time", "width": 150},
-        {"fieldname": "diff_time_float", "label": "Total Hrs float", "fieldtype": "float", "width": 150},
+        {"fieldname": "shift", "label": "Shift", "fieldtype": "Data", "width": 70},
+        {"fieldname": "custom_shift_hours", "label": "Shift Hours", "fieldtype": "Time", "width": 100},
+        {"fieldname": "over_time", "label": "Overtime", "fieldtype": "Time", "width": 100},
+        {"fieldname": "deduction", "label": "Deduction", "fieldtype": "Time", "width": 100},
+        {"fieldname": "diff_time", "label": "Total Hrs", "fieldtype": "Time", "width": 100},
         
     ]
     return columns
