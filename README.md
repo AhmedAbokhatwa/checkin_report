@@ -6,4 +6,3 @@ for Hr reports
 
 mit
 
-![Alt text](checkin_report/images/rotated_shift.png)
