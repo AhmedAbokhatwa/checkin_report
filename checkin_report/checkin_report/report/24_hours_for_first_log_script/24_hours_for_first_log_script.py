@@ -11,7 +11,7 @@ def get_columns():
         {"fieldname": "employee", "label": "Employee", "fieldtype": "Link", "options": "Employee", "width": 200},
         {"fieldname": "employee_name", "label": "Employee Name", "fieldtype": "Data", "width": 200},
         {"fieldname": "first_log", "label": "First Log", "fieldtype": "Datetime", "width": 200},
-        {"fieldname": "last_log_within_24_hours", "label": "Last Log", "fieldtype": "Datetime", "width": 200},
+        {"fieldname": "last_log_within_22_hours", "label": "Last Log", "fieldtype": "Datetime", "width": 200},
         {"fieldname": "shift", "label": "Shift", "fieldtype": "Data", "width": 70},
         {"fieldname": "custom_shift_hours", "label": "Shift Hours", "fieldtype": "Time", "width": 100},
         {"fieldname": "over_time", "label": "Overtime", "fieldtype": "Time", "width": 100},
@@ -39,7 +39,7 @@ def get_data(filters):
         ec_in.time AS first_log,
         LAG(ec_in.time) OVER (PARTITION BY ec_in.employee ORDER BY ec_in.time) AS previous_log,
         DATE(ec_in.time) AS date_of_log_in,
-        TIMESTAMPDIFF(HOUR, LAG(ec_in.time) OVER (PARTITION BY ec_in.employee ORDER BY ec_in.time), ec_in.time) >= 24 AS stamp
+        TIMESTAMPDIFF(HOUR, LAG(ec_in.time) OVER (PARTITION BY ec_in.employee ORDER BY ec_in.time), ec_in.time) >= 22 AS stamp
     FROM 
         `tabEmployee Checkin` ec_in
     WHERE 
@@ -48,11 +48,11 @@ def get_data(filters):
         {employee_filter}
         {date_filter}
 ),
-LastLogWithin24Hours AS (
+LastLogWithin22Hours AS (
     SELECT 
         fl.employee,
-        fl.first_log,
-        MAX(ec_out.time) AS last_log_within_24_hours,
+        fl.first_log,   
+        MAX(ec_out.time) AS last_log_within_22_hours,
         st.custom_shift_hours,
         COALESCE(TIMEDIFF(MAX(ec_out.time), fl.first_log), '00:00:00') AS diff_time,
         COALESCE(TIMESTAMPDIFF(SECOND, fl.first_log, MAX(ec_out.time)) / 3600.0, 0) AS diff_time_float,
@@ -80,15 +80,15 @@ LastLogWithin24Hours AS (
         ec_out.log_type = 'OUT'
         AND ec_out.shift = 'General'  -- Filter only General shift
         AND ec_out.time > fl.first_log
-        AND ec_out.time <= fl.first_log + INTERVAL 1 DAY
+        AND ec_out.time <= fl.first_log + INTERVAL 22 HOUR
     GROUP BY 
         fl.employee, fl.first_log, st.custom_shift_hours
 )
 SELECT * 
-FROM LastLogWithin24Hours
+FROM LastLogWithin22Hours
 JOIN previous_log_in fl 
-    ON fl.employee = LastLogWithin24Hours.employee 
-    AND fl.first_log = LastLogWithin24Hours.first_log
+    ON fl.employee = LastLogWithin22Hours.employee 
+    AND fl.first_log = LastLogWithin22Hours.first_log
 WHERE fl.previous_log IS NULL OR fl.stamp = 1;
 
 
